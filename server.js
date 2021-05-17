@@ -4,33 +4,75 @@ projectData = {}
 // Require Express to run server and routes
 
 // Import a function under the name express, cors and body parse which are all of the Node packages we have installed
-const express = require('express'); 
-const cors = require('cors');
-const bodyParser = require('body-parser');
+const express = require('express'); // the librarian - this is how we get access to the server and create it (its a framework or template for node) 
+const cors = require('cors'); //type of middleware - security 
+const bodyParser = require('body-parser');//type of middleware - translator
 
 // Start up an instance of app
 const app = express(); //creating the app variable that will use the information from the express method and will work as instructions
+
+// Establish a connection to the server
 const port = 3000; // we always need a port name. This name is how we will be able to keep calling back
+
 app.listen(port, function() { //here we listen out for the port name and display friendly message to use letting them know if our code is working
   console.log(`Server running on port ${port}`) //message that will pop up if code work and we use a short cut to pull port inforamtion
 });
 
-// respond with "hello world" when a GET request is made to the homepage
-app.get('/Documents', function (req, res){// here 
+// GET request:
+// Retrieves data from the server
+
+// POST request:
+// Submit data to the server
+
+// respond with projectData when a GET request is made to the japanfotos
+app.get('/japanfotos', function (req, res){// here the '/japanfotos' is an example of a path or route. This route or path can be given any name. This is also where the information that we are sending to the server  At this stage it is just being created. Here we are also creating a function within the .get
   res.send(projectData)
 });
 
-const temp = 
-const date = 
-const userResponse = 
+// 
+app.post('/route136', function (req, res) {
 
-// const data = []
-// app.post('/myUrl', addMovie )
+  projectData.fecha = req.body("date")
+  projectData.temperatura = req.body("temperature")
+  projectData.sentimiento = req.body("userMood")
 
-// function addMovie (req, res){
-//   console.log(req.body)
-//   data.push(req.body)
-// }
+})
+
+
+// let a = "Hello"
+// let b = a
+// let c = b
+// let d = c
+// projectData.mood = d // -> Hello
+
+
+
+// let myFantasticMood = "Feeling Inspired"
+// projectData.mood = myFantasticMood
+
+// console.log(myFantasticMood) // -> Feeling inspired
+
+// projectData.mood = "Feeling Inspired"
+
+// console.log(projectData.mood) // -> Feeling inspired
+
+// let a = projectData.mood 
+// console.log(a) // -> Feeling inspired
+
+
+// app.post('/route136', function (req, res) {
+//   // projectData.digitalID  = req.body("email") // The long name is my request name (username)
+//   // projectData.printedName = req.body("name")
+  
+//   projectData.fecha = req.body("date")
+//   projectData.temperatura = req.body("temperature")
+//   projectData.sentimiento = req.body("userMood")
+
+// //   step one: client inputs data on website 
+// //   step two: client sends data inputted to backend server
+// //   step three: data goes through the middle wear tunnel
+// //   step four: data finds assinged route in this case it is called the 'postDoc' where the data inputted by the client will be stored
+// })
 
 
 
