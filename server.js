@@ -29,7 +29,7 @@ app.get('/japanfotos', function (req, res){// here the '/japanfotos' is an examp
   res.send(projectData)
 });
 
-// 
+// Prepared server to receive data
 app.post('/route136', function (req, res) {
 
   projectData.fecha = req.body("date")
