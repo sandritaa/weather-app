@@ -36,7 +36,7 @@ app.post('/route136', function (req, res) {
   projectData.temperatura = req.body("temperature")
   projectData.sentimiento = req.body("userMood")
 
-})
+});
 
 
 // let a = "Hello"
