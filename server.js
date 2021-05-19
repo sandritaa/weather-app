@@ -1,5 +1,5 @@
 // Setup empty JS object to act as endpoint for all routes
-projectData = {}
+projectDataBackEnd = {}
 
 // Require Express to run server and routes
 
@@ -25,16 +25,16 @@ app.listen(port, function() { //here we listen out for the port name and display
 // Submit data to the server
 
 // respond with projectData when a GET request is made to the japanfotos
-app.get('/japanfotos', function (req, res){// here the '/japanfotos' is an example of a path or route. This route or path can be given any name. This is also where the information that we are sending to the server  At this stage it is just being created. Here we are also creating a function within the .get
-  res.send(projectData)
+app.get('/getroute128', function (req, res){// here the '/japanfotos' is an example of a path or route. This route or path can be given any name. This is also where the information that we are sending to the server  At this stage it is just being created. Here we are also creating a function within the .get
+  res.send(projectDataBackEnd)
 });
 
 // Prepared server to receive data
-app.post('/route136', function (req, res) {
+app.post('/postroute136', function (req, res) {
 
-  projectData.fecha = req.body("date")
-  projectData.temperatura = req.body("temperature")
-  projectData.sentimiento = req.body("userMood")
+  projectDataBackEnd.fecha = req.body("dateZeroServer")
+  projectDataBackEnd.temperatura = req.body("temperatureZeroServer")
+  projectDataBackEnd.sentimiento = req.body("userMoodZeroServer")
 
 });
 
