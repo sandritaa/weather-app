@@ -1,162 +1,87 @@
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/* GET - Async function from backend*/
+//----------------------------------------------------------------------------
+// Define functions 
+//----------------------------------------------------------------------------
 
-async function getFromServer() { //attribute names assigned in function
-    const backEnd = await fetch('/getroute128'); 
-    return backEnd;
+// GET from Server - Async function 
+async function getFromServer() {
+    const projectDataJSON = await fetch('http://localhost:3000/getroute'); 
+    let projectData = await projectDataJSON.json();
+    console.log('NEW DATA RECEIVED')
+    console.log('Latest date received from server: ' + projectData.date)
+    console.log('Latest temperature received from server: ' + projectData.temp)
+    console.log('Latest mood received from server: ' + projectData.mood)
+    return projectData
 }
 
-/* POST - Async Funtion*/
-
-async function postWaitTime(userMoodUno, dateUno, temperatureUno ) { //attribute names assigned in function
-    let processDataFrontEnd = { //crate object using the key (name) assosnged in server.js and pair with values in that we created in our function attributes. 
-        dateZeroServer: dateUno,
-        temperatureZeroServer: temperatureUno,
-        userMoodZeroServer: userMoodUno,
+// POST to Server - Async Funtion
+async function postToServer(dataFrontEnd, tempFrontEnd, moodFrontEnd) { 
+    // Assemble object with correct names as defined in backend POST function
+    let projectData = { 
+        date: dataFrontEnd,
+        temp: tempFrontEnd,
+        mood: moodFrontEnd
     }
     
-    await fetch ('/postroute136', { //our route name that we created on server.js 
+    await fetch ('http://localhost:3000/postRoute', {
         method: "POST",
         headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify(processDataFrontEnd)//what the client side is sending to the server (this body extension can be pulled from server.js file)
+        body: JSON.stringify(projectData)
     })   
 }
 
-
-/* GET - Async Function to API*/
-
-async function getWeatherApi(urlUno, zipCodeUno, keyUno) { 
-    debugger;
-    const temperatureInCity = await fetch(urlUno+zipCodeUno+'&appid='+keyUno); // here we use as arguments the three parts of information that we need. The word &appid is requried by the API. We use our own arguments here.
-    const temperature = await temperatureInCity.json(); // here we are using .json to translate our JS response in this case (temperatureInCity) to get data.
-    debugger;
-    return temperature //return this item within our function to have access to this variable outside of the function. This will be used indirectly in the postWaitTime function. 
+// GET from WeatherAPI - Async Funtion
+async function getWeatherApi(url, key, zipCode) { 
+    let tempJSON = await fetch(url+zipCode+',us&appid='+key); 
+    let tempObj = await tempJSON.json(); 
+    let temp = tempObj.main.temp;
+    return temp
 };
 
+// UPDATE UI with data from server
+function updateUI(projectData){
+    const dateElement = document.getElementById('date')
+    const tempElement = document.getElementById('temp')
+    const contentElement = document.getElementById('content')
+    dateElement.innerHTML = `<span class="entry-item">Date: </span>${projectData.date}`
+    contentElement.innerHTML = `<span class="entry-item">You feel: </span>${projectData.mood}`
+    tempElement.innerHTML = `<span class="entry-item">Temperature: </span>${projectData.temp}`
+}
+
+// Function called by event listener
+async function performUpdate() {
+    
+    // Create a new date instance dynamically with JS
+    let day = new Date();
+    let date = day.getMonth()+'.'+ day.getDate()+'.'+ day.getFullYear();
+
+    // First retrieve user data from the client side (zipCode and mood)
+    let zipCode = document.getElementById('zip').value;
+    let mood = document.getElementById('feelings').value;
+
+    // Using the zip code that the user entered, call the weather API and retrieve temperature
+    let temp = await getWeatherApi(baseURL, baseKey, zipCode);
+
+    // Post the required data to server from the front end (date, temperature and mood )
+    postToServer(date, temp, mood);
+
+    // Get data back from server to front end
+    let projectData = await getFromServer();
+
+    // Update UI
+    updateUI(projectData)                                                                                                                                                                                                                                                            
+}; 
+
+//----------------------------------------------------------------------------
+// Runtime Code
+//----------------------------------------------------------------------------
+
+// Define weather API URL and Key
+const baseURL = 'http://api.openweathermap.org/data/2.5/weather?zip=';
+const baseKey = '278a4bb0ed3e1dc04317050dfdf8f145';
+
+// Get the generate button element
+const generateListener = document.getElementById('generate');
+
+// Create event listener on the click of the generate button
+generateListener.addEventListener("click", performUpdate)
 
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-/*  API Global Variables*/ 
-
-const baseURL = 'http://api.openweathermap.org/data/2.5/weather?zip=';// Link is provided by API
-const baseKey = '278a4bb0ed3e1dc04317050dfdf8f145';// Number key is provided by API   
-
-
-/*Create a new date instance dynamically with JS*/
-
-let day = new Date();
-let date = day.getMonth()+'.'+ day.getDate()+'.'+ day.getFullYear(); //name only in app.js
-
-
-/*Creating Event Listener*/
-
-const generateListener = document.getElementById('generate');// Defining variable that will be used in event listener
-
-generateListener.addEventListener("click", function(){ //Here we kick off our event listener
-    //HTML to front end
-    debugger;
-    const zipcodeDos = document.getElementById('zip').value; // Here we are pulling this information from our HTML, creating a variable where we will next the information and use it in the above function and event listener command.
-    const temperatureDos = getWeatherApi(baseURL, zipcodeDos, baseKey);// Create variable to nest getWeatherAPI info. Temprature variable only in app.js 
-    // const userMoodDos = document.getElementById('feelings').value;
-
-    // front end to back end (call post function we created)
-    // postWaitTime(zipcodeDos, temperatureDos, userMoodDos );
-
-    debugger;   
-    // back end to front end (GET function we still need to create this function)
-    // const end = 
-    // front end to HTML (we still need to create this function)
-                                                                                                                                                                                                                                                                      
-}); 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// function sum(a,b){
-//     let c = a+b
-//     return c
-// }
-
-// let myValue = sum(2,3)
-
-// console.log(myValue)
-
-
-
-
-
-
-
-// js day (app.js name) = dia (function name ) = date (server name that we are promising our backend for storage )
-// js tura (app.js name) = temp (function name) = temperature (server name that we are promising our backend for storage )
-// js mood (app.js name) = feels (function name) = userMood (server name that we are promising our backend for storage )
-
-
-
-
-// postWaitTime(date,tura, mood)
-
-// function sum(a,b){
-//     return a+b
-// }
-
-// function multiply(a,b){
-//     return a*b
-// }
-
-
-// GOOD MORNING! I LOVE YOUUUUUU
-// let addition = sum(2,3)
-
-// let multiplication = multiply(4,5)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// function printMyName() {
-//     return "Tom"
-// }
-
-// let name  = printMyName(); // -> Tom
-
-
-// async function printMyName() {
-//     return "Tom"
-// }
-
-// printMyName().then(alert) // -> Tom
-
-
-
-
-// function printMyName() {
-//     Promise.resolve(console.log("Tom"))
-// }
