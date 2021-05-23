@@ -31,7 +31,7 @@ async function postToServer(dataFrontEnd, tempFrontEnd, moodFrontEnd) {
 
 // GET from WeatherAPI - Async Funtion
 async function getWeatherApi(url, key, zipCode) { 
-    let tempJSON = await fetch(url+zipCode+',us&appid='+key); 
+    let tempJSON = await fetch(url+zipCode+',us&units=imperial&appid='+key); 
     let tempObj = await tempJSON.json(); 
     let temp = tempObj.main.temp;
     return temp
@@ -52,7 +52,7 @@ async function performUpdate() {
     
     // Create a new date instance dynamically with JS
     let day = new Date();
-    let date = day.getMonth()+'.'+ day.getDate()+'.'+ day.getFullYear();
+    let date = day.getMonth()+1+'.'+ day.getDate()+'.'+ day.getFullYear();
 
     // First retrieve user data from the client side (zipCode and mood)
     let zipCode = document.getElementById('zip').value;
@@ -84,4 +84,3 @@ const generateListener = document.getElementById('generate');
 
 // Create event listener on the click of the generate button
 generateListener.addEventListener("click", performUpdate)
-
