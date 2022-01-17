@@ -1,16 +1,16 @@
 <template>
-  <SinglePost/>
+  <SinglePost v-for="i in [0,1,2,3,4,5,6,7,8,9,10]" :key="i"></SinglePost>
 </template>
 
 <script>
-import SinglePost from './components/SinglePost.vue'
+import SinglePost from "./components/SinglePost.vue";
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
-    SinglePost
-  }
-}
+    SinglePost,
+  },
+};
 </script>
 
 <style>
