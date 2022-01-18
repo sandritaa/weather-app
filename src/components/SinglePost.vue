@@ -6,17 +6,17 @@
     <img v-bind:src="postApi.img_src" alt="" />
   
     <h2>
-    
+      Rover status:
+      {{ postApi.rover.status }} 
+      <br>
       Rover name: {{ postApi.rover.name }} 
       <br>
-      Rover landing date:{{ postApi.rover.landing_date }} 
+       Rover landing date:{{ postApi.rover.landing_date }} 
       <br>
       Rover launch date:
       {{ postApi.rover.launch_date }} 
       <br>
-      Rover status:
-      {{ postApi.rover.status }} 
-      <br>
+    
       Camera: {{ postApi.camera.full_name }}
     </h2>
     <h3>Earth Date: {{ postApi.earth_date }}</h3>
@@ -46,20 +46,13 @@ export default {
 <style>
 .container
  {
-     position: center;
-  background-color: lightgrey;
+  position: center;
+  background-color: rgb(219, 219, 219);
   width: 600px;
-  border: 15px solid green;
+  border: 15px solid rgb(241, 241, 241);
   padding: 50px;
   margin: auto;
-    box-shadow: 1px 1px #888888;
 
-  /* box-sizing: border-box; */
-  /* border: 0.5px solid #ffffff;
-  padding: 5px;
-  box-shadow: 1px 1px #888888; */
- 
-  /* height: 100px; */
   }
 
 img {
