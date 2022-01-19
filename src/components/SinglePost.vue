@@ -23,7 +23,7 @@
     <button
       v-if="like == true"
       style="background-color: green"
-      @click="like = !like">unlike
+      @click="like = !like">like
     </button>
     <button v-else @click="like = !like">like</button>
   </div>
