@@ -20,12 +20,11 @@
     </h2>
 
     <!-- <p>{{ like }}</p> -->
-    <button
+  <button
       v-if="like == true"
-      style="background-color: green"
-      @click="like = !like">like
+      @click="like = !like">&#128156;
     </button>
-    <button v-else @click="like = !like">like</button>
+    <button v-else @click="like = !like">🖤</button>
   </div>
 </template>
 
@@ -64,5 +63,8 @@ img {
 
 h2 {
   font-family: "Assistant", sans-serif;
+}
+button{
+  background-color: white; font-size: 20px;
 }
 </style>
