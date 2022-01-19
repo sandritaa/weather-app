@@ -21,3 +21,10 @@ To compile for production purposes, run the following command:
 ```
 npm run build
 ```
+
+### Run built version
+To run the built version of the webapp, type the following command:
+```
+npx serve -s dist
+```
+You can then use the *Local* address and paste in the browser to view the spacetagram
