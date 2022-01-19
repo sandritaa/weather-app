@@ -24,7 +24,7 @@
       v-if="like == true"
       @click="like = !like">&#128156;
     </button>
-    <button v-else @click="like = !like">🖤</button>
+    <button v-else @click="like = !like">&#128420; </button>
   </div>
 </template>
 
@@ -65,6 +65,8 @@ h2 {
   font-family: "Assistant", sans-serif;
 }
 button{
-  background-color: white; font-size: 20px;
+  background-color: transparent; 
+  border: none ;
+  font-size: 40px;
 }
 </style>
