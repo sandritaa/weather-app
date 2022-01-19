@@ -1,9 +1,9 @@
 <template>
-  <!-- <h1>single post</h1> -->
-
   <div class="container">
+    <!-- Render the image passed as a prop from the root component -->
     <img v-bind:src="postApi.img_src" alt="" />
 
+    <!-- Render the description and earth date passed as a prop from the root components -->
     <h2>
       Rover status:
       {{ postApi.rover.status }}
@@ -19,22 +19,21 @@
       Camera: {{ postApi.camera.full_name }}
     </h2>
 
-    <!-- <p>{{ like }}</p> -->
-  <button
-      v-if="like == true"
-      @click="like = !like">&#128156;
-    </button>
-    <button v-else @click="like = !like">&#128420; </button>
+    <!-- Depending on the state of the flag like, display a black heart or a purple heart -->
+    <button v-if="like == true" @click="like = !like">&#128156;</button>
+    <button v-else @click="like = !like">&#128420;</button>
   </div>
 </template>
 
 <script>
 export default {
+  // Define a boolean to hold the value of the like state
   data() {
     return {
       like: false,
     };
   },
+  // Define the type of prop which is being passed by the root components
   props: {
     postApi: {
       type: Object,
@@ -64,9 +63,9 @@ img {
 h2 {
   font-family: "Assistant", sans-serif;
 }
-button{
-  background-color: transparent; 
-  border: none ;
+button {
+  background-color: transparent;
+  border: none;
   font-size: 40px;
 }
 </style>

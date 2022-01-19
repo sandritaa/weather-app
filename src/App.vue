@@ -1,4 +1,8 @@
 <template>
+  <!-- If the api is not loading, then loop through the number of
+  elements in the array returned by the API and generate a SinglePost components instance
+  for each element.
+  For each instance, an individual element of the API array is passed to the SinglePost as a prop -->
   <div v-if="loading == false">
     <SinglePost
       v-for="singlePost in apiData"
@@ -6,10 +10,12 @@
       :postApi="singlePost"
     ></SinglePost>
   </div>
+  <!-- If the API is loading, display this to the user -->
   <div v-else>Loading...</div>
 </template>
 
 <script>
+// Import our custom component SinglePost and axios which we use for getting the API
 import SinglePost from "./components/SinglePost.vue";
 import axios from "axios";
 
@@ -18,7 +24,8 @@ export default {
   components: {
     SinglePost,
   },
- 
+  // Define the loading boolean to hold the value of the loading state
+  // and define the object which will contain the API returned data
   data() {
     return {
       loading: true,
@@ -26,7 +33,7 @@ export default {
     };
   },
   created() {
-    // Let's assume the api is loading
+    // Set the loading flag as true
     this.loading = true;
 
     // Call the API on page load (mounted()) - this is a Promise
@@ -41,7 +48,6 @@ export default {
     });
   },
 };
-
 </script>
 
 <style>
